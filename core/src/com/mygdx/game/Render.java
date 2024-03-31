@@ -190,11 +190,7 @@ public class Render {
                 }
                 if (frame != null)
                 {
-                    if (p.team == TeamType.RED)
-                        drawPerson(frame, person, false);
-                    else {
-                        drawPerson(frame, person, true);
-                    }
+                    drawPerson(frame, person, p.team != TeamType.RED);
                 } else {
                     System.out.println("renderTeams(): unknown class: " + p.getClass().getSimpleName());
                 }
