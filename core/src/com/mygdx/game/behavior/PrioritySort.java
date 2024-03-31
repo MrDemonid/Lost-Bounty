@@ -1,4 +1,6 @@
-package com.mygdx.game.person;
+package com.mygdx.game.behavior;
+
+import com.mygdx.game.person.PersonBase;
 
 import java.util.Comparator;
 

@@ -77,17 +77,8 @@ public abstract class PersonBase implements ActionInterface {
         if (percent > origin)
             return origin;
         int n = (origin * percent) / 100;
-        return origin + (rnd.nextInt(0, n * 2+1)- n);
-    }
-
-    /**
-     * Задаёт местоположение персонажа
-     * @param x По оси X
-     * @param y По оси Y
-     */
-    public void setPosition(int x, int y)
-    {
-        position.setXY(x, y);
+        return origin + (rnd.nextInt(n * 2+1)- n);
+//        return origin + (rnd.nextInt(0, n * 2+1)- n);
     }
 
     /**

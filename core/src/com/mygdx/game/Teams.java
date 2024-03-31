@@ -1,23 +1,20 @@
 package com.mygdx.game;
 
-import com.mygdx.game.behavior.ActionLog;
-import com.mygdx.game.behavior.CoordXY;
-import com.mygdx.game.behavior.HeroesNames;
-import com.mygdx.game.behavior.TeamType;
+import com.mygdx.game.behavior.*;
 import com.mygdx.game.config.ConfigGame;
 import com.mygdx.game.movedobj.*;
 import com.mygdx.game.person.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 public class Teams {
-    private ArrayList<PersonBase> red;
-    private ArrayList<PersonBase> blue;
+    private final ArrayList<PersonBase> red;
+    private final ArrayList<PersonBase> blue;
 
-    private ArrayList<TeamPerson> allPersons;
+    private final ArrayList<TeamPerson> allPersons;
 
     int curPerson;
 
@@ -25,22 +22,24 @@ public class Teams {
 
     public Teams()
     {
-        this.red = new ArrayList<>();
-        this.blue = new ArrayList<>();
-        this.allPersons = new ArrayList<>();
-        actionObjects = new ArrayList<>();
+        this.red = new ArrayList<PersonBase>();
+        this.blue = new ArrayList<PersonBase>();
+        this.allPersons = new ArrayList<TeamPerson>();
+        actionObjects = new ArrayList<ObjBase>();
         curPerson = -1;
     }
 
     /**
      * Возвращает список всех персонажей, отсортированный для правильной отрисовки
-     * @return
+     * @return Отсортированный список персонажей
      */
     public ArrayList<TeamPerson> getAllPersons()
     {
-        ArrayList<TeamPerson> team = (ArrayList<TeamPerson>) allPersons.stream()
-                .sorted((n1, n2) -> Integer.compare(n2.person.getPosition().getY(), n1.person.getPosition().getY()))
-                .collect(Collectors.toList());
+        ArrayList<TeamPerson> team = new ArrayList<TeamPerson>(allPersons);
+        Collections.sort(team, new TeamSort());
+//        ArrayList<TeamPerson> team = (ArrayList<TeamPerson>) allPersons.stream()
+//                .sorted((n1, n2) -> Integer.compare(n2.person.getPosition().getY(), n1.person.getPosition().getY()))
+//                .collect(Collectors.toList());
         return team;
     }
 
@@ -151,7 +150,7 @@ public class Teams {
         ArrayList<PersonBase> all = new ArrayList<>();
         all.addAll(red);
         all.addAll(blue);
-        all.sort((o1, o2) -> Integer.compare(o2.priority, o1.priority));
+        Collections.sort(all, new PrioritySort());  //        all.sort((o1, o2) -> Integer.compare(o2.priority, o1.priority));
         // переносим их в команды
         for (PersonBase p : all)
         {
